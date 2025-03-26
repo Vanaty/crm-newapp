@@ -319,7 +319,7 @@ class __TwigTemplate_3e231f7d4793f4b58218bf4aa5c633fd extends Template
                         });
                         const data = await response.json();
 
-                        if (data.success) {
+                        if (data.status === 'success') {
                             row.remove();
                             Swal.fire(
                                 'Supprimé !',
@@ -535,7 +535,7 @@ class __TwigTemplate_3e231f7d4793f4b58218bf4aa5c633fd extends Template
                         });
                         const data = await response.json();
 
-                        if (data.success) {
+                        if (data.status === 'success') {
                             row.remove();
                             Swal.fire(
                                 'Supprimé !',

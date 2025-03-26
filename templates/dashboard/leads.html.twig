@@ -159,7 +159,7 @@
                         });
                         const data = await response.json();
 
-                        if (data.success) {
+                        if (data.status === 'success') {
                             row.remove();
                             Swal.fire(
                                 'Supprimé !',

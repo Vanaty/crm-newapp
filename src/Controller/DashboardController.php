@@ -23,7 +23,9 @@ class DashboardController extends BaseController
             'stats' => [
                 'tickets' => $dashboardData['ticketCount'] ?? 0,
                 'leads' => $dashboardData['leadCount'] ?? 0,
-                'clients' => $dashboardData['clientCount'] ?? 0
+                'clients' => $dashboardData['clientCount'] ?? 0,
+                'expensesTtl' => $dashboardData['expensesTtl'] ?? 0,
+                'budgetsTtl' => $dashboardData['budgetsTtl'] ?? 0
             ],
             'ticketPriorities' => $ticketStats['priorities'] ?? [],
             'budgetByClient' => $budgetStats['byClient'] ?? [],
@@ -76,7 +78,7 @@ class DashboardController extends BaseController
         }
     }
 
-    #[Route('/ticket/{id}', name: 'app_ticket_delete', methods: ['DELETE'])]
+    #[Route('/tickets/{id}', name: 'app_ticket_delete', methods: ['DELETE'])]
     public function deleteTicket(int $id): JsonResponse
     {
         try {

@@ -30,8 +30,8 @@ return [
                         .'|/edit(*:77)'
                         .'|(*:84)'
                     .')'
-                    .'|ticket/([^/]++)(*:107)'
-                    .'|expense/([^/]++)(*:131)'
+                    .'|tickets/([^/]++)(*:108)'
+                    .'|expense/([^/]++)(*:132)'
                 .')'
             .')/?$}sDu',
     ],
@@ -39,8 +39,8 @@ return [
         35 => [[['_route' => '_preview_error', '_controller' => 'error_controller::preview', '_format' => 'html'], ['code', '_format'], null, null, false, true, null]],
         77 => [[['_route' => 'app_lead_edit', '_controller' => 'App\\Controller\\DashboardController::editLead'], ['id'], ['POST' => 0], null, false, false, null]],
         84 => [[['_route' => 'app_lead_delete', '_controller' => 'App\\Controller\\DashboardController::deleteLead'], ['id'], ['DELETE' => 0], null, false, true, null]],
-        107 => [[['_route' => 'app_ticket_delete', '_controller' => 'App\\Controller\\DashboardController::deleteTicket'], ['id'], ['DELETE' => 0], null, false, true, null]],
-        131 => [
+        108 => [[['_route' => 'app_ticket_delete', '_controller' => 'App\\Controller\\DashboardController::deleteTicket'], ['id'], ['DELETE' => 0], null, false, true, null]],
+        132 => [
             [['_route' => 'app_expense_update', '_controller' => 'App\\Controller\\DashboardController::updateExpense'], ['id'], ['PUT' => 0], null, false, true, null],
             [null, null, null, null, false, false, 0],
         ],

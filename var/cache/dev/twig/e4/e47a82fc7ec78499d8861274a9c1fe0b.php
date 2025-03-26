@@ -89,15 +89,49 @@ class __TwigTemplate_40da5116d8209d9b966f203d8112478b extends Template
         yield "
     <style>
         .stat-card {
-            transition: transform 0.2s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: none;
+            border-radius: 1rem;
         }
+
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
+
+        .stat-card .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 130px;
+        }
+
+        .stat-card h5 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .stat-card h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 0;
+        }
+
         .chart-container {
             position: relative;
-            height: 300px;
+            height: 320px;
             margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .card {
+            border: none;
+            border-radius: 1rem;
         }
     </style>
 ";
@@ -107,7 +141,7 @@ class __TwigTemplate_40da5116d8209d9b966f203d8112478b extends Template
         yield from [];
     }
 
-    // line 22
+    // line 56
     /**
      * @return iterable<null|scalar|\Stringable>
      */
@@ -117,79 +151,87 @@ class __TwigTemplate_40da5116d8209d9b966f203d8112478b extends Template
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "body"));
 
-        // line 23
-        yield "    ";
-        // line 24
-        yield "    <div class=\"row mb-4\">
-        <div class=\"col-md-4\">
-            <div class=\"card stat-card bg-primary text-white\">
-                <div class=\"card-body\" onclick=\"window.location.href='leads'\">
-                    <h5 class=\"card-title\">Tickets</h5>
-                    <h2 class=\"card-text\">";
-        // line 29
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["stats"]) || array_key_exists("stats", $context) ? $context["stats"] : (function () { throw new RuntimeError('Variable "stats" does not exist.', 29, $this->source); })()), "tickets", [], "any", false, false, false, 29), "html", null, true);
-        yield "</h2>
+        // line 57
+        yield "    <div class=\"container-fluid\">
+        <div class=\"row g-4 mb-4\">
+            ";
+        // line 59
+        $context["colors"] = ["primary", "success", "info", "danger", "warning"];
+        // line 60
+        yield "            ";
+        $context["labels"] = ["Tickets", "Leads", "Clients", "Dépenses", "Budgets"];
+        // line 61
+        yield "            ";
+        $context["links"] = ["tickets", "leads", "clients", "expenses", "budgets"];
+        // line 62
+        yield "            ";
+        $context["values"] = [CoreExtension::getAttribute($this->env, $this->source, (isset($context["stats"]) || array_key_exists("stats", $context) ? $context["stats"] : (function () { throw new RuntimeError('Variable "stats" does not exist.', 62, $this->source); })()), "tickets", [], "any", false, false, false, 62), CoreExtension::getAttribute($this->env, $this->source, (isset($context["stats"]) || array_key_exists("stats", $context) ? $context["stats"] : (function () { throw new RuntimeError('Variable "stats" does not exist.', 62, $this->source); })()), "leads", [], "any", false, false, false, 62), CoreExtension::getAttribute($this->env, $this->source, (isset($context["stats"]) || array_key_exists("stats", $context) ? $context["stats"] : (function () { throw new RuntimeError('Variable "stats" does not exist.', 62, $this->source); })()), "clients", [], "any", false, false, false, 62), CoreExtension::getAttribute($this->env, $this->source, (isset($context["stats"]) || array_key_exists("stats", $context) ? $context["stats"] : (function () { throw new RuntimeError('Variable "stats" does not exist.', 62, $this->source); })()), "expensesTtl", [], "any", false, false, false, 62), CoreExtension::getAttribute($this->env, $this->source, (isset($context["stats"]) || array_key_exists("stats", $context) ? $context["stats"] : (function () { throw new RuntimeError('Variable "stats" does not exist.', 62, $this->source); })()), "budgetsTtl", [], "any", false, false, false, 62)];
+        // line 63
+        yield "
+            ";
+        // line 64
+        $context['_parent'] = $context;
+        $context['_seq'] = CoreExtension::ensureTraversable(range(0, 4));
+        foreach ($context['_seq'] as $context["_key"] => $context["i"]) {
+            // line 65
+            yield "                <div class=\"col-md-4 col-lg-3\">
+                    <div class=\"card stat-card bg-";
+            // line 66
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["colors"]) || array_key_exists("colors", $context) ? $context["colors"] : (function () { throw new RuntimeError('Variable "colors" does not exist.', 66, $this->source); })()), $context["i"], [], "array", false, false, false, 66), "html", null, true);
+            yield " text-white\" onclick=\"window.location.href='";
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["links"]) || array_key_exists("links", $context) ? $context["links"] : (function () { throw new RuntimeError('Variable "links" does not exist.', 66, $this->source); })()), $context["i"], [], "array", false, false, false, 66), "html", null, true);
+            yield "'\">
+                        <div class=\"card-body text-center\">
+                            <h5 class=\"card-title\">";
+            // line 68
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["labels"]) || array_key_exists("labels", $context) ? $context["labels"] : (function () { throw new RuntimeError('Variable "labels" does not exist.', 68, $this->source); })()), $context["i"], [], "array", false, false, false, 68), "html", null, true);
+            yield "</h5>
+                            <h2 class=\"card-text\">";
+            // line 69
+            yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape($this->extensions['Twig\Extension\CoreExtension']->formatNumber(CoreExtension::getAttribute($this->env, $this->source, (isset($context["values"]) || array_key_exists("values", $context) ? $context["values"] : (function () { throw new RuntimeError('Variable "values" does not exist.', 69, $this->source); })()), $context["i"], [], "array", false, false, false, 69), 2, ",", " "), "html", null, true);
+            yield "</h2>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class=\"col-md-4\">
-            <div class=\"card stat-card bg-success text-white\" onclick=\"window.location.href='tickets'\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Leads</h5>
-                    <h2 class=\"card-text\">";
-        // line 37
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["stats"]) || array_key_exists("stats", $context) ? $context["stats"] : (function () { throw new RuntimeError('Variable "stats" does not exist.', 37, $this->source); })()), "leads", [], "any", false, false, false, 37), "html", null, true);
-        yield "</h2>
-                </div>
-            </div>
-        </div>
-        <div class=\"col-md-4\">
-            <div class=\"card stat-card bg-info text-white\" onclick=\"window.location.href='clients'\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Clients</h5>
-                    <h2 class=\"card-text\">";
-        // line 45
-        yield $this->env->getRuntime('Twig\Runtime\EscaperRuntime')->escape(CoreExtension::getAttribute($this->env, $this->source, (isset($context["stats"]) || array_key_exists("stats", $context) ? $context["stats"] : (function () { throw new RuntimeError('Variable "stats" does not exist.', 45, $this->source); })()), "clients", [], "any", false, false, false, 45), "html", null, true);
-        yield "</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+            ";
+        }
+        $_parent = $context['_parent'];
+        unset($context['_seq'], $context['_key'], $context['i'], $context['_parent']);
+        $context = array_intersect_key($context, $_parent) + $_parent;
+        // line 74
+        yield "        </div>
 
-    ";
-        // line 52
-        yield "    <div class=\"row mb-4\">
-        <div class=\"col-md-6\">
-            <div class=\"card\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Priorités des Tickets</h5>
-                    <div class=\"chart-container\">
-                        <canvas id=\"ticketPrioritiesChart\"></canvas>
+        <div class=\"row g-4\">
+            <div class=\"col-md-6\">
+                <div class=\"card shadow-sm\">
+                    <div class=\"card-body\">
+                        <h5 class=\"card-title\">Priorités des Tickets</h5>
+                        <div class=\"chart-container\">
+                            <canvas id=\"ticketPrioritiesChart\"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=\"col-md-6\">
+                <div class=\"card shadow-sm\">
+                    <div class=\"card-body\">
+                        <h5 class=\"card-title\">Budget par Client</h5>
+                        <div class=\"chart-container\">
+                            <canvas id=\"budgetByClientChart\"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class=\"col-md-6\">
-            <div class=\"card\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Budget par Client</h5>
-                    <div class=\"chart-container\">
-                        <canvas id=\"budgetByClientChart\"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    ";
-        // line 76
-        yield "    <div class=\"row\">
-        <div class=\"col-12\">
-            <div class=\"card\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Dépenses vs Budget</h5>
-                    <div class=\"chart-container\">
-                        <canvas id=\"expenseVsBudgetChart\"></canvas>
+        <div class=\"row g-4 mt-3\">
+            <div class=\"col-12\">
+                <div class=\"card shadow-sm\">
+                    <div class=\"card-body\">
+                        <h5 class=\"card-title\">Dépenses vs Budget</h5>
+                        <div class=\"chart-container\">
+                            <canvas id=\"expenseVsBudgetChart\"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -202,7 +244,7 @@ class __TwigTemplate_40da5116d8209d9b966f203d8112478b extends Template
         yield from [];
     }
 
-    // line 90
+    // line 114
     /**
      * @return iterable<null|scalar|\Stringable>
      */
@@ -212,103 +254,93 @@ class __TwigTemplate_40da5116d8209d9b966f203d8112478b extends Template
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f = $this->extensions["Symfony\\Bridge\\Twig\\Extension\\ProfilerExtension"];
         $__internal_6f47bbe9983af81f1e7450e9a3e3768f->enter($__internal_6f47bbe9983af81f1e7450e9a3e3768f_prof = new \Twig\Profiler\Profile($this->getTemplateName(), "block", "javascripts"));
 
-        // line 91
+        // line 115
         yield "    ";
         yield from $this->yieldParentBlock("javascripts", $context, $blocks);
         yield "
     <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Ticket Priorities Donut Chart
-            new Chart(document.getElementById('ticketPrioritiesChart'), {
+        document.addEventListener('DOMContentLoaded', function () {
+            const ticketPrioritiesChart = new Chart(document.getElementById('ticketPrioritiesChart'), {
                 type: 'doughnut',
                 data: {
                     labels: ";
-        // line 99
-        yield json_encode(Twig\Extension\CoreExtension::keys((isset($context["ticketPriorities"]) || array_key_exists("ticketPriorities", $context) ? $context["ticketPriorities"] : (function () { throw new RuntimeError('Variable "ticketPriorities" does not exist.', 99, $this->source); })())));
+        // line 122
+        yield json_encode(Twig\Extension\CoreExtension::keys((isset($context["ticketPriorities"]) || array_key_exists("ticketPriorities", $context) ? $context["ticketPriorities"] : (function () { throw new RuntimeError('Variable "ticketPriorities" does not exist.', 122, $this->source); })())));
         yield ",
                     datasets: [{
                         data: ";
-        // line 101
-        yield json_encode(Twig\Extension\CoreExtension::map($this->env, Twig\Extension\CoreExtension::keys((isset($context["ticketPriorities"]) || array_key_exists("ticketPriorities", $context) ? $context["ticketPriorities"] : (function () { throw new RuntimeError('Variable "ticketPriorities" does not exist.', 101, $this->source); })())), function ($__v__) use ($context, $macros) { $context["v"] = $__v__; return CoreExtension::getAttribute($this->env, $this->source, (isset($context["ticketPriorities"]) || array_key_exists("ticketPriorities", $context) ? $context["ticketPriorities"] : (function () { throw new RuntimeError('Variable "ticketPriorities" does not exist.', 101, $this->source); })()), (isset($context["v"]) || array_key_exists("v", $context) ? $context["v"] : (function () { throw new RuntimeError('Variable "v" does not exist.', 101, $this->source); })()), [], "any", false, false, false, 101); }));
+        // line 124
+        yield json_encode(Twig\Extension\CoreExtension::map($this->env, Twig\Extension\CoreExtension::keys((isset($context["ticketPriorities"]) || array_key_exists("ticketPriorities", $context) ? $context["ticketPriorities"] : (function () { throw new RuntimeError('Variable "ticketPriorities" does not exist.', 124, $this->source); })())), function ($__v__) use ($context, $macros) { $context["v"] = $__v__; return CoreExtension::getAttribute($this->env, $this->source, (isset($context["ticketPriorities"]) || array_key_exists("ticketPriorities", $context) ? $context["ticketPriorities"] : (function () { throw new RuntimeError('Variable "ticketPriorities" does not exist.', 124, $this->source); })()), (isset($context["v"]) || array_key_exists("v", $context) ? $context["v"] : (function () { throw new RuntimeError('Variable "v" does not exist.', 124, $this->source); })()), [], "any", false, false, false, 124); }));
         yield ",
-                        backgroundColor: [
-                            '#28a745', // Low
-                            '#ffc107', // Medium
-                            '#fd7e14', // High
-                            '#dc3545', // Critical
-                            '#6c757d', // Closed
-                            '#9c27b0'  // Urgent
-                        ]
+                        backgroundColor: ['#198754', '#ffc107', '#fd7e14', '#dc3545', '#6c757d', '#9c27b0']
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    plugins: { legend: { position: 'bottom' } }
                 }
             });
 
-            // Budget by Client Bar Chart
-            new Chart(document.getElementById('budgetByClientChart'), {
+            const budgetByClientChart = new Chart(document.getElementById('budgetByClientChart'), {
                 type: 'bar',
                 data: {
                     labels: ";
-        // line 122
-        yield json_encode(Twig\Extension\CoreExtension::keys((isset($context["budgetByClient"]) || array_key_exists("budgetByClient", $context) ? $context["budgetByClient"] : (function () { throw new RuntimeError('Variable "budgetByClient" does not exist.', 122, $this->source); })())));
+        // line 137
+        yield json_encode(Twig\Extension\CoreExtension::keys((isset($context["budgetByClient"]) || array_key_exists("budgetByClient", $context) ? $context["budgetByClient"] : (function () { throw new RuntimeError('Variable "budgetByClient" does not exist.', 137, $this->source); })())));
         yield ",
                     datasets: [{
                         label: 'Budget',
                         data: ";
-        // line 125
-        yield json_encode(Twig\Extension\CoreExtension::map($this->env, Twig\Extension\CoreExtension::keys((isset($context["budgetByClient"]) || array_key_exists("budgetByClient", $context) ? $context["budgetByClient"] : (function () { throw new RuntimeError('Variable "budgetByClient" does not exist.', 125, $this->source); })())), function ($__v__) use ($context, $macros) { $context["v"] = $__v__; return CoreExtension::getAttribute($this->env, $this->source, (isset($context["budgetByClient"]) || array_key_exists("budgetByClient", $context) ? $context["budgetByClient"] : (function () { throw new RuntimeError('Variable "budgetByClient" does not exist.', 125, $this->source); })()), (isset($context["v"]) || array_key_exists("v", $context) ? $context["v"] : (function () { throw new RuntimeError('Variable "v" does not exist.', 125, $this->source); })()), [], "any", false, false, false, 125); }));
+        // line 140
+        yield json_encode(Twig\Extension\CoreExtension::map($this->env, Twig\Extension\CoreExtension::keys((isset($context["budgetByClient"]) || array_key_exists("budgetByClient", $context) ? $context["budgetByClient"] : (function () { throw new RuntimeError('Variable "budgetByClient" does not exist.', 140, $this->source); })())), function ($__v__) use ($context, $macros) { $context["v"] = $__v__; return CoreExtension::getAttribute($this->env, $this->source, (isset($context["budgetByClient"]) || array_key_exists("budgetByClient", $context) ? $context["budgetByClient"] : (function () { throw new RuntimeError('Variable "budgetByClient" does not exist.', 140, $this->source); })()), (isset($context["v"]) || array_key_exists("v", $context) ? $context["v"] : (function () { throw new RuntimeError('Variable "v" does not exist.', 140, $this->source); })()), [], "any", false, false, false, 140); }));
         yield ",
                         backgroundColor: '#4CAF50'
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
                 }
             });
 
-            // Expense vs Budget Timeline
-            new Chart(document.getElementById('expenseVsBudgetChart'), {
+            const expenseVsBudgetChart = new Chart(document.getElementById('expenseVsBudgetChart'), {
                 type: 'line',
                 data: {
                     labels: ";
-        // line 144
-        yield json_encode(Twig\Extension\CoreExtension::keys((isset($context["expenseVsBudget"]) || array_key_exists("expenseVsBudget", $context) ? $context["expenseVsBudget"] : (function () { throw new RuntimeError('Variable "expenseVsBudget" does not exist.', 144, $this->source); })())));
+        // line 154
+        yield json_encode(Twig\Extension\CoreExtension::keys((isset($context["expenseVsBudget"]) || array_key_exists("expenseVsBudget", $context) ? $context["expenseVsBudget"] : (function () { throw new RuntimeError('Variable "expenseVsBudget" does not exist.', 154, $this->source); })())));
         yield ",
-                    datasets: [{
-                        label: 'Dépenses',
-                        data: ";
-        // line 147
-        yield json_encode(Twig\Extension\CoreExtension::column((isset($context["expenseVsBudget"]) || array_key_exists("expenseVsBudget", $context) ? $context["expenseVsBudget"] : (function () { throw new RuntimeError('Variable "expenseVsBudget" does not exist.', 147, $this->source); })()), "expenses"));
+                    datasets: [
+                        {
+                            label: 'Dépenses',
+                            data: ";
+        // line 158
+        yield json_encode(Twig\Extension\CoreExtension::column((isset($context["expenseVsBudget"]) || array_key_exists("expenseVsBudget", $context) ? $context["expenseVsBudget"] : (function () { throw new RuntimeError('Variable "expenseVsBudget" does not exist.', 158, $this->source); })()), "expenses"));
         yield ",
-                        borderColor: '#dc3545',
-                        fill: false
-                    }, {
-                        label: 'Budget',
-                        data: ";
-        // line 152
-        yield json_encode(Twig\Extension\CoreExtension::column((isset($context["expenseVsBudget"]) || array_key_exists("expenseVsBudget", $context) ? $context["expenseVsBudget"] : (function () { throw new RuntimeError('Variable "expenseVsBudget" does not exist.', 152, $this->source); })()), "budget"));
+                            borderColor: '#dc3545',
+                            fill: false,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Budget',
+                            data: ";
+        // line 165
+        yield json_encode(Twig\Extension\CoreExtension::column((isset($context["expenseVsBudget"]) || array_key_exists("expenseVsBudget", $context) ? $context["expenseVsBudget"] : (function () { throw new RuntimeError('Variable "expenseVsBudget" does not exist.', 165, $this->source); })()), "budget"));
         yield ",
-                        borderColor: '#28a745',
-                        fill: false
-                    }]
+                            borderColor: '#198754',
+                            fill: false,
+                            tension: 0.4
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
                     scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                        y: { beginAtZero: true },
+                        x: { ticks: { autoSkip: true, maxTicksLimit: 10 } }
                     }
                 }
             });
@@ -342,7 +374,7 @@ class __TwigTemplate_40da5116d8209d9b966f203d8112478b extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  299 => 152,  291 => 147,  285 => 144,  263 => 125,  257 => 122,  233 => 101,  228 => 99,  216 => 91,  206 => 90,  186 => 76,  161 => 52,  152 => 45,  141 => 37,  130 => 29,  123 => 24,  121 => 23,  111 => 22,  87 => 6,  77 => 5,  60 => 3,  43 => 1,);
+        return array (  330 => 165,  320 => 158,  313 => 154,  296 => 140,  290 => 137,  274 => 124,  269 => 122,  258 => 115,  248 => 114,  202 => 74,  191 => 69,  187 => 68,  180 => 66,  177 => 65,  173 => 64,  170 => 63,  167 => 62,  164 => 61,  161 => 60,  159 => 59,  155 => 57,  145 => 56,  87 => 6,  77 => 5,  60 => 3,  43 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -355,80 +387,104 @@ class __TwigTemplate_40da5116d8209d9b966f203d8112478b extends Template
     {{ parent() }}
     <style>
         .stat-card {
-            transition: transform 0.2s;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+            border: none;
+            border-radius: 1rem;
         }
+
         .stat-card:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
         }
+
+        .stat-card .card-body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            height: 130px;
+        }
+
+        .stat-card h5 {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .stat-card h2 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 0;
+        }
+
         .chart-container {
             position: relative;
-            height: 300px;
+            height: 320px;
             margin-bottom: 2rem;
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .card {
+            border: none;
+            border-radius: 1rem;
         }
     </style>
 {% endblock %}
 
 {% block body %}
-    {# Statistics Cards #}
-    <div class=\"row mb-4\">
-        <div class=\"col-md-4\">
-            <div class=\"card stat-card bg-primary text-white\">
-                <div class=\"card-body\" onclick=\"window.location.href='leads'\">
-                    <h5 class=\"card-title\">Tickets</h5>
-                    <h2 class=\"card-text\">{{ stats.tickets }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class=\"col-md-4\">
-            <div class=\"card stat-card bg-success text-white\" onclick=\"window.location.href='tickets'\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Leads</h5>
-                    <h2 class=\"card-text\">{{ stats.leads }}</h2>
-                </div>
-            </div>
-        </div>
-        <div class=\"col-md-4\">
-            <div class=\"card stat-card bg-info text-white\" onclick=\"window.location.href='clients'\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Clients</h5>
-                    <h2 class=\"card-text\">{{ stats.clients }}</h2>
-                </div>
-            </div>
-        </div>
-    </div>
+    <div class=\"container-fluid\">
+        <div class=\"row g-4 mb-4\">
+            {% set colors = ['primary', 'success', 'info', 'danger', 'warning'] %}
+            {% set labels = ['Tickets', 'Leads', 'Clients', 'Dépenses', 'Budgets'] %}
+            {% set links = ['tickets', 'leads', 'clients', 'expenses', 'budgets'] %}
+            {% set values = [stats.tickets, stats.leads, stats.clients, stats.expensesTtl, stats.budgetsTtl] %}
 
-    {# Charts Row 1 #}
-    <div class=\"row mb-4\">
-        <div class=\"col-md-6\">
-            <div class=\"card\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Priorités des Tickets</h5>
-                    <div class=\"chart-container\">
-                        <canvas id=\"ticketPrioritiesChart\"></canvas>
+            {% for i in 0..4 %}
+                <div class=\"col-md-4 col-lg-3\">
+                    <div class=\"card stat-card bg-{{ colors[i] }} text-white\" onclick=\"window.location.href='{{ links[i] }}'\">
+                        <div class=\"card-body text-center\">
+                            <h5 class=\"card-title\">{{ labels[i] }}</h5>
+                            <h2 class=\"card-text\">{{ values[i]|number_format(2, ',', ' ') }}</h2>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <div class=\"row g-4\">
+            <div class=\"col-md-6\">
+                <div class=\"card shadow-sm\">
+                    <div class=\"card-body\">
+                        <h5 class=\"card-title\">Priorités des Tickets</h5>
+                        <div class=\"chart-container\">
+                            <canvas id=\"ticketPrioritiesChart\"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class=\"col-md-6\">
+                <div class=\"card shadow-sm\">
+                    <div class=\"card-body\">
+                        <h5 class=\"card-title\">Budget par Client</h5>
+                        <div class=\"chart-container\">
+                            <canvas id=\"budgetByClientChart\"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class=\"col-md-6\">
-            <div class=\"card\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Budget par Client</h5>
-                    <div class=\"chart-container\">
-                        <canvas id=\"budgetByClientChart\"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
-    {# Charts Row 2 #}
-    <div class=\"row\">
-        <div class=\"col-12\">
-            <div class=\"card\">
-                <div class=\"card-body\">
-                    <h5 class=\"card-title\">Dépenses vs Budget</h5>
-                    <div class=\"chart-container\">
-                        <canvas id=\"expenseVsBudgetChart\"></canvas>
+        <div class=\"row g-4 mt-3\">
+            <div class=\"col-12\">
+                <div class=\"card shadow-sm\">
+                    <div class=\"card-body\">
+                        <h5 class=\"card-title\">Dépenses vs Budget</h5>
+                        <div class=\"chart-container\">
+                            <canvas id=\"expenseVsBudgetChart\"></canvas>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -440,32 +496,23 @@ class __TwigTemplate_40da5116d8209d9b966f203d8112478b extends Template
     {{ parent() }}
     <script src=\"https://cdn.jsdelivr.net/npm/chart.js\"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Ticket Priorities Donut Chart
-            new Chart(document.getElementById('ticketPrioritiesChart'), {
+        document.addEventListener('DOMContentLoaded', function () {
+            const ticketPrioritiesChart = new Chart(document.getElementById('ticketPrioritiesChart'), {
                 type: 'doughnut',
                 data: {
                     labels: {{ ticketPriorities|keys|json_encode|raw }},
                     datasets: [{
                         data: {{ ticketPriorities|keys|map(v => attribute(ticketPriorities, v))|json_encode|raw }},
-                        backgroundColor: [
-                            '#28a745', // Low
-                            '#ffc107', // Medium
-                            '#fd7e14', // High
-                            '#dc3545', // Critical
-                            '#6c757d', // Closed
-                            '#9c27b0'  // Urgent
-                        ]
+                        backgroundColor: ['#198754', '#ffc107', '#fd7e14', '#dc3545', '#6c757d', '#9c27b0']
                     }]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false
+                    plugins: { legend: { position: 'bottom' } }
                 }
             });
 
-            // Budget by Client Bar Chart
-            new Chart(document.getElementById('budgetByClientChart'), {
+            const budgetByClientChart = new Chart(document.getElementById('budgetByClientChart'), {
                 type: 'bar',
                 data: {
                     labels: {{ budgetByClient|keys|json_encode|raw }},
@@ -477,45 +524,43 @@ class __TwigTemplate_40da5116d8209d9b966f203d8112478b extends Template
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
+                    scales: { y: { beginAtZero: true } },
+                    plugins: { legend: { display: false } }
                 }
             });
 
-            // Expense vs Budget Timeline
-            new Chart(document.getElementById('expenseVsBudgetChart'), {
+            const expenseVsBudgetChart = new Chart(document.getElementById('expenseVsBudgetChart'), {
                 type: 'line',
                 data: {
                     labels: {{ expenseVsBudget|keys|json_encode|raw }},
-                    datasets: [{
-                        label: 'Dépenses',
-                        data: {{ expenseVsBudget|column('expenses')|json_encode|raw }},
-                        borderColor: '#dc3545',
-                        fill: false
-                    }, {
-                        label: 'Budget',
-                        data: {{ expenseVsBudget|column('budget')|json_encode|raw }},
-                        borderColor: '#28a745',
-                        fill: false
-                    }]
+                    datasets: [
+                        {
+                            label: 'Dépenses',
+                            data: {{ expenseVsBudget|column('expenses')|json_encode|raw }},
+                            borderColor: '#dc3545',
+                            fill: false,
+                            tension: 0.4
+                        },
+                        {
+                            label: 'Budget',
+                            data: {{ expenseVsBudget|column('budget')|json_encode|raw }},
+                            borderColor: '#198754',
+                            fill: false,
+                            tension: 0.4
+                        }
+                    ]
                 },
                 options: {
                     responsive: true,
-                    maintainAspectRatio: false,
+                    plugins: { legend: { position: 'bottom' } },
                     scales: {
-                        y: {
-                            beginAtZero: true
-                        }
+                        y: { beginAtZero: true },
+                        x: { ticks: { autoSkip: true, maxTicksLimit: 10 } }
                     }
                 }
             });
         });
     </script>
-{% endblock %}
-", "dashboard/index.html.twig", "D:\\S6\\MrRojo\\crm-newapp\\templates\\dashboard\\index.html.twig");
+{% endblock %}", "dashboard/index.html.twig", "D:\\S6\\MrRojo\\crm-newapp\\templates\\dashboard\\index.html.twig");
     }
 }
