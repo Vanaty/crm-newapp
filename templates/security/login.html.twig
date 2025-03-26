@@ -1,0 +1,174 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .login-container {
+            max-width: 400px;
+            margin: 2rem auto;
+        }
+        .google-btn {
+            background-color: #fff;
+            color: #757575;
+            border: 1px solid #ddd;
+            padding: 0.5rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+        .google-btn:hover {
+            background-color: #f8f9fa;
+            border-color: #ddd;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .google-btn i {
+            font-size: 1.2rem;
+        }
+        .divider {
+            text-align: center;
+            margin: 1rem 0;
+            position: relative;
+        }
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #ddd;
+        }
+        .divider::before { left: 0; }
+        .divider::after { right: 0; }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="login-container">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="text-center mb-4">Connexion</h2>
+
+                {% if app.request.get('error') %}
+                    <div class="alert alert-danger">
+                        {{ app.request.get('error')|raw }}
+                    </div>
+                {% endif %}
+
+                {% if app.request.get('success') %}
+                    <div class="alert alert-success">
+                        {{ app.request.get('success')|raw }}
+                    </div>
+                {% endif %}
+
+                {% if error %}
+                    <div class="alert alert-danger">
+                        {% if error.messageKey is defined %}
+                            {{ error.messageKey|trans(error.messageData, 'security') }}
+                        {% else %}
+                            {{ error }}
+                        {% endif %}
+                    </div>
+                {% endif %}
+
+                <a href="{{ path('connect_google') }}" class="btn google-btn">
+                    <i aria-hidden="true" class="fab fa-google"></i>
+                    Se connecter avec Google
+                </a>
+
+                <div class="divider">
+                    <span class="px-2 bg-white">ou</span>
+                </div>
+
+                <form action="{{ path('app_login_check') }}" method="post" id="loginForm">
+                    <div class="mb-3">
+                        <label for="username" class="form-label">Nom d'utilisateur</label>
+                        <input type="text" value="{{ last_username }}" name="username" id="username" class="form-control" required autofocus>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="password" class="form-label">Mot de passe</label>
+                        <input type="password" name="password" id="password" class="form-control" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="_remember_me" id="remember_me">
+                            <label class="form-check-label" for="remember_me">
+                                Se souvenir de moi
+                            </label>
+                        </div>
+                    </div>
+
+                    <button class="btn btn-primary w-100" type="submit" id="loginButton">
+                        Se connecter
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('loginForm');
+        const button = document.getElementById('loginButton');
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            button.disabled = true;
+            button.innerHTML = '<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Connexion...';
+
+            try {
+                const formData = new FormData(form);
+                const response = await fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const data = await response.json();
+
+                if (data.status === 'error' || response.status === 401) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Erreur',
+                        text: data.message || 'Identifiants invalides'
+                    });
+                } else if (data.status === 'success' || data.redirect) {
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Succès',
+                        text: data.message || 'Connexion réussie',
+                        showConfirmButton: false,
+                        timer: 1500
+                    }).then(() => {
+                        window.location.href = data.redirect;
+                    });
+                }
+            } catch (error) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur',
+                    text: 'Une erreur est survenue lors de la connexion'
+                });
+            } finally {
+                button.disabled = false;
+                button.innerHTML = 'Se connecter';
+            }
+        });
+    });
+    </script>
+{% endblock %}

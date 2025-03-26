@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Expenses{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <h1 class="mb-4">Liste des dépenses</h1>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Description</th>
+                    <th>Montant</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for expense in expenses %}
+                    <tr>
+                        <td>{{ expense.id }}</td>
+                        <td>{{ expense.description }}</td>
+                        <td>
+                            <span class="amount-display">{{ expense.montant }} €</span>
+                            <form class="amount-form d-none">
+                                <div class="input-group input-group-sm">
+                                    <input type="number" class="form-control" value="{{ expense.montant }}" step="0.01" required>
+                                    <button type="submit" class="btn btn-success btn-sm">✓</button>
+                                    <button type="button" class="btn btn-danger btn-sm cancel-edit">✗</button>
+                                </div>
+                            </form>
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-primary edit-amount">Éditer</button>
+                            <a href="#" class="btn btn-sm btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4" class="text-center">Aucune dépense trouvée</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="{{ asset('js/expense-handler.js') }}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.edit-amount').forEach(button => {
+                button.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    row.querySelector('.amount-display').classList.add('d-none');
+                    row.querySelector('.amount-form').classList.remove('d-none');
+                });
+            });
+
+            document.querySelectorAll('.cancel-edit').forEach(button => {
+                button.addEventListener('click', function() {
+                    const row = this.closest('tr');
+                    row.querySelector('.amount-display').classList.remove('d-none');
+                    row.querySelector('.amount-form').classList.add('d-none');
+                });
+            });
+
+            document.querySelectorAll('.amount-form').forEach(form => {
+                form.addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const row = this.closest('tr');
+                    const id = row.querySelector('td').textContent;
+                    const amount = this.querySelector('input').value;
+
+                    if (await handleExpenseUpdate(id, parseFloat(amount))) {
+                        row.querySelector('.amount-display').textContent = amount + ' €';
+                        row.querySelector('.amount-display').classList.remove('d-none');
+                        row.querySelector('.amount-form').classList.add('d-none');
+                    }
+                });
+            });
+        });
+    </script>
+{% endblock %}

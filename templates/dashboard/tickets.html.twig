@@ -1,0 +1,186 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Tickets{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .priority-badge {
+            padding: 0.35em 0.65em;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            font-size: 0.75em;
+            text-transform: uppercase;
+        }
+        .priority-low { background-color: #28a745; color: white; }
+        .priority-medium { background-color: #ffc107; color: black; }
+        .priority-high { background-color: #fd7e14; color: white; }
+        .priority-critical { background-color: #dc3545; color: white; }
+        .priority-urgent { background-color: #9c27b0; color: white; }
+
+        .status-badge {
+            padding: 0.35em 0.65em;
+            border-radius: 0.25rem;
+            font-weight: 600;
+            font-size: 0.75em;
+        }
+        .status-open { background-color: #17a2b8; color: white; }
+        .status-in-progress { background-color: #007bff; color: white; }
+        .status-closed { background-color: #6c757d; color: white; }
+        
+        .table-hover tbody tr:hover {
+            background-color: rgba(0,0,0,.075);
+            cursor: pointer;
+        }
+        
+        .ticket-subject {
+            font-weight: 500;
+            color: #2c3e50;
+        }
+        
+        .action-buttons {
+            white-space: nowrap;
+        }
+        
+        .search-box {
+            max-width: 300px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="container mt-4">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h1>Tickets</h1>
+        <div class="search-box">
+            <input type="text" id="ticketSearch" class="form-control" placeholder="Rechercher un ticket...">
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Sujet</th>
+                            <th>Priorité</th>
+                            <th>Statut</th>
+                            <th>Employé</th>
+                            <th>Client</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for ticket in tickets %}
+                            <tr data-id="{{ ticket.id }}">
+                                <td>
+                                    <span class="ticket-subject">{{ ticket.subject }}</span>
+                                </td>
+                                <td>
+                                    <span class="priority-badge priority-{{ ticket.priority|lower }}">
+                                        {{ ticket.priority }}
+                                    </span>
+                                </td>
+                                <td>
+                                    <span class="status-badge status-{{ ticket.status|lower|replace({' ': '-'}) }}">
+                                        {{ ticket.status }}
+                                    </span>
+                                </td>
+                                <td>{{ ticket.employee }}</td>
+                                <td>{{ ticket.customer }}</td>
+                                <td class="text-end action-buttons">
+                                    <a href="{{ path('app_expenses', {'ticketId': ticket.id, 'leadId': 0}) }}" 
+                                       class="btn btn-sm btn-outline-primary">
+                                        <i class="fas fa-money-bill"></i> Dépenses
+                                    </a>
+                                    <button type="button" class="btn btn-sm btn-outline-danger delete-btn">
+                                        <i class="fas fa-trash"></i> Supprimer
+                                    </button>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="6" class="text-center py-4">
+                                    <div class="text-muted">
+                                        <i class="fas fa-ticket-alt fa-2x mb-3"></i>
+                                        <p>Aucun ticket trouvé</p>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://kit.fontawesome.com/your-code.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Search functionality
+        const searchInput = document.getElementById('ticketSearch');
+        const rows = document.querySelectorAll('tbody tr');
+
+        searchInput.addEventListener('input', function(e) {
+            const searchTerm = e.target.value.toLowerCase();
+            
+            rows.forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(searchTerm) ? '' : 'none';
+            });
+        });
+
+        // Delete functionality with SweetAlert2
+        document.querySelectorAll('.delete-btn').forEach(btn => {
+            btn.addEventListener('click', async function(e) {
+                e.preventDefault();
+                const row = this.closest('tr');
+                const ticketId = row.dataset.id;
+
+                const result = await Swal.fire({
+                    title: 'Êtes-vous sûr ?',
+                    text: "Cette action ne peut pas être annulée !",
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#dc3545',
+                    cancelButtonColor: '#6c757d',
+                    confirmButtonText: 'Oui, supprimer',
+                    cancelButtonText: 'Annuler'
+                });
+
+                if (result.isConfirmed) {
+                    try {
+                        const response = await fetch(`/dashboard/tickets/${ticketId}`, {
+                            method: 'DELETE'
+                        });
+                        const data = await response.json();
+
+                        if (data.success) {
+                            row.remove();
+                            Swal.fire(
+                                'Supprimé !',
+                                'Le ticket a été supprimé avec succès.',
+                                'success'
+                            );
+                        } else {
+                            throw new Error('Failed to delete');
+                        }
+                    } catch (error) {
+                        Swal.fire(
+                            'Erreur !',
+                            'Une erreur est survenue lors de la suppression.',
+                            'error'
+                        );
+                    }
+                }
+            });
+        });
+    });
+    </script>
+{% endblock %}
