@@ -49,6 +49,10 @@
                             <a class="nav-link {% if app.request.get('_route') == 'app_settings_budget_alert' %}active{% endif %}" 
                                href="{{ path('app_settings_budget_alert') }}">BudgetAlert</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if app.request.get('_route') == 'expense_import' %}active{% endif %}" 
+                               href="{{ path('expense_import') }}">Import</a>
+                        </li>
                     </ul>
                     {% if app.user %}
                         <ul class="navbar-nav">

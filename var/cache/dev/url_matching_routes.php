@@ -12,6 +12,7 @@ return [
         '/dashboard/tickets' => [[['_route' => 'app_dashboard_tickets', '_controller' => 'App\\Controller\\DashboardController::tickets'], null, null, null, false, false, null]],
         '/dashboard/leads' => [[['_route' => 'app_dashboard_leads', '_controller' => 'App\\Controller\\DashboardController::leads'], null, null, null, false, false, null]],
         '/dashboard/expenses' => [[['_route' => 'app_expenses', '_controller' => 'App\\Controller\\DashboardController::expenses'], null, ['GET' => 0], null, false, false, null]],
+        '/expense/import' => [[['_route' => 'expense_import', '_controller' => 'App\\Controller\\ExpenseController::import'], null, ['GET' => 0, 'POST' => 1], null, false, false, null]],
         '/connect/google' => [[['_route' => 'connect_google', '_controller' => 'App\\Controller\\GoogleController::connectAction'], null, null, null, false, false, null]],
         '/connect/google/check' => [[['_route' => 'connect_google_check', '_controller' => 'App\\Controller\\GoogleController::connectCheckAction'], null, null, null, false, false, null]],
         '/' => [[['_route' => 'app_redirection', '_controller' => 'App\\Controller\\RedirectionController::home'], null, null, null, false, false, null]],

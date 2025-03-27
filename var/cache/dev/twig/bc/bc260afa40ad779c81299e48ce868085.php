@@ -137,15 +137,27 @@ class __TwigTemplate_24b271472889bd0dc33747912df497de extends Template
         yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_settings_budget_alert");
         yield "\">BudgetAlert</a>
                         </li>
+                        <li class=\"nav-item\">
+                            <a class=\"nav-link ";
+        // line 53
+        if ((CoreExtension::getAttribute($this->env, $this->source, CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 53, $this->source); })()), "request", [], "any", false, false, false, 53), "get", ["_route"], "method", false, false, false, 53) == "expense_import")) {
+            yield "active";
+        }
+        yield "\" 
+                               href=\"";
+        // line 54
+        yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("expense_import");
+        yield "\">Import</a>
+                        </li>
                     </ul>
                     ";
-        // line 53
-        if (CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 53, $this->source); })()), "user", [], "any", false, false, false, 53)) {
-            // line 54
+        // line 57
+        if (CoreExtension::getAttribute($this->env, $this->source, (isset($context["app"]) || array_key_exists("app", $context) ? $context["app"] : (function () { throw new RuntimeError('Variable "app" does not exist.', 57, $this->source); })()), "user", [], "any", false, false, false, 57)) {
+            // line 58
             yield "                        <ul class=\"navbar-nav\">
                             <li class=\"nav-item\">
                                 <a href=\"";
-            // line 56
+            // line 60
             yield $this->extensions['Symfony\Bridge\Twig\Extension\RoutingExtension']->getPath("app_logout");
             yield "\" class=\"nav-link text-danger\" id=\"logoutBtn\">
                                     <i class=\"fas fa-sign-out-alt me-1\"></i>Déconnexion
@@ -154,15 +166,15 @@ class __TwigTemplate_24b271472889bd0dc33747912df497de extends Template
                         </ul>
                     ";
         }
-        // line 62
+        // line 66
         yield "                </div>
             </div>
         </nav>
         <div class=\"container\">
             ";
-        // line 66
+        // line 70
         yield from $this->unwrap()->yieldBlock('body', $context, $blocks);
-        // line 67
+        // line 71
         yield "        </div>
 
         <script>
@@ -265,7 +277,7 @@ class __TwigTemplate_24b271472889bd0dc33747912df497de extends Template
         yield from [];
     }
 
-    // line 66
+    // line 70
     /**
      * @return iterable<null|scalar|\Stringable>
      */
@@ -302,7 +314,7 @@ class __TwigTemplate_24b271472889bd0dc33747912df497de extends Template
      */
     public function getDebugInfo(): array
     {
-        return array (  269 => 66,  258 => 19,  255 => 18,  245 => 17,  230 => 8,  220 => 7,  203 => 5,  166 => 67,  164 => 66,  158 => 62,  149 => 56,  145 => 54,  143 => 53,  137 => 50,  131 => 49,  125 => 46,  119 => 45,  113 => 42,  107 => 41,  101 => 38,  95 => 37,  89 => 34,  83 => 33,  73 => 26,  67 => 22,  65 => 17,  62 => 16,  60 => 7,  55 => 5,  49 => 1,);
+        return array (  281 => 70,  270 => 19,  267 => 18,  257 => 17,  242 => 8,  232 => 7,  215 => 5,  178 => 71,  176 => 70,  170 => 66,  161 => 60,  157 => 58,  155 => 57,  149 => 54,  143 => 53,  137 => 50,  131 => 49,  125 => 46,  119 => 45,  113 => 42,  107 => 41,  101 => 38,  95 => 37,  89 => 34,  83 => 33,  73 => 26,  67 => 22,  65 => 17,  62 => 16,  60 => 7,  55 => 5,  49 => 1,);
     }
 
     public function getSourceContext(): Source
@@ -357,6 +369,10 @@ class __TwigTemplate_24b271472889bd0dc33747912df497de extends Template
                         <li class=\"nav-item\">
                             <a class=\"nav-link {% if app.request.get('_route') == 'app_settings_budget_alert' %}active{% endif %}\" 
                                href=\"{{ path('app_settings_budget_alert') }}\">BudgetAlert</a>
+                        </li>
+                        <li class=\"nav-item\">
+                            <a class=\"nav-link {% if app.request.get('_route') == 'expense_import' %}active{% endif %}\" 
+                               href=\"{{ path('expense_import') }}\">Import</a>
                         </li>
                     </ul>
                     {% if app.user %}

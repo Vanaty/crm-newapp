@@ -47,6 +47,20 @@ class ApiService
         return $headers;
     }
 
+    public function importCsv($data) {
+        try {
+            $response = $this->client->request('POST', $this->baseUrl . '/expenses/import', [
+                'json' => $data,
+                'headers' => $this->getHeaders()
+            ]);
+
+            $data = $response->toArray();
+            
+            return $data;
+        } catch (\Exception $e) {
+            throw new \Exception('Erreur lors de l\'importation du fichier CSV: ' . $e->getMessage());
+        }
+    }
     public function login(string $username, string $password): array
     {
         try {
